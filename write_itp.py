@@ -1,30 +1,35 @@
 import sys
 import json
+from collections import OrderedDict
 
 class Parameters():
     """Container for forcefield parameters
     """
     def __init__(self):
 
-        self.atom_params = {}
+        self.atom_params = OrderedDict()
         self.atom_params['atoms'] = []
     
-        self.bond_params = {}
+        self.bond_params = OrderedDict()
         self.bond_params['bonds'] = []
         
-        self.angle_params = {}
+        self.angle_params = OrderedDict()
         self.angle_params['angles'] = []
 
-        self.dihedral_params = {}
+        self.dihedral_params = OrderedDict()
         self.dihedral_params['dihedrals'] = []
 
-        self.improper_params = {}
+        self.improper_params = OrderedDict()
         self.improper_params['impropers'] = []
         
         
-        self.n_params = {}
+        self.n_params = OrderedDict()
         self.n_params['n_params'] = []
-        self.n_params['n_params'].append({'n_atoms': 0, 'n_bonds': 0, 'n_angles': 0, 'n_dihedrals': 0, 'n_impropers': 0})
+        self.n_params['n_params'].append(OrderedDict([('n_atoms', 0),
+                                                      ('n_bonds', 0),
+                                                      ('n_angles', 0),
+                                                      ('n_dihedrals', 0),
+                                                      ('n_impropers', 0)]))
 
         self.n_atoms = 0
         self.n_bonds = 0
@@ -36,95 +41,95 @@ class Parameters():
         self.n_atoms += 1
         self.n_params['n_params'][0]['n_atoms']= self.n_atoms;
         
-        self.atom_params['atoms'].append({
-             'name': name,
-             'bond_type': bond_type,
-             'atomic_number': atomic_number,
-             'mass': mass,
-             'charge': charge,
-             'ptype': ptype,
-             'sigma': sigma,
-             'epsilon': epsilon
-        })
+        self.atom_params['atoms'].append(OrderedDict([
+             ('name', name),
+             ('bond_type', bond_type),
+             ('atomic_number', atomic_number),
+             ('mass', mass),
+             ('charge', charge),
+             ('ptype', ptype),
+             ('sigma', sigma),
+             ('epsilon', epsilon)
+        ]))
     
     def add_bond_harmonic(self, i, j, b0, kb):
         self.n_bonds += 1
         self.n_params['n_params'][0]['n_bonds']= self.n_bonds
 
-        self.bond_params['bonds'].append({
-            'type': 'harmonic',
-            'i': i,
-            'j': j,
-            'func': 1,
-            'b0': b0,
-            'kb': kb
-        })
+        self.bond_params['bonds'].append(OrderedDict([
+            ('type', 'harmonic'),
+            ('i', i),
+            ('j', j),
+            ('func', 1),
+            ('b0', b0),
+            ('kb', kb)
+        ]))
    
     def add_bond_G96(self, i, j, b0, kb):
         self.n_bonds += 1
         self.n_params['n_params'][0]['n_bonds']= self.n_bonds
         
-        self.bond_params['bonds'].append({
-                                         'type': 'G96',
-                                         'i': i,
-                                         'j': j,
-                                         'func': 2,
-                                         'b0': b0,
-                                         'kb': kb
-                                         })
+        self.bond_params['bonds'].append(OrderedDict([
+                                         ('type', 'G96'),
+                                         ('i', i),
+                                         ('j', j),
+                                         ('func', 2),
+                                         ('b0', b0),
+                                         ('kb', kb)
+                                         ]))
     def add_bond_fene(self, i, j, bm, kb):
         self.n_bonds += 1
         self.n_params['n_params'][0]['n_bonds']= self.n_bonds
         
-        self.bond_params['bonds'].append({
-                                         'type': 'fene',
-                                         'i': i,
-                                         'j': j,
-                                         'func': 7,
-                                         'bm': bm,
-                                         'kb': kb
-                                         })
+        self.bond_params['bonds'].append(OrderedDict([
+                                         ('type', 'fene'),
+                                         ('i', i),
+                                         ('j', j),
+                                         ('func', 7),
+                                         ('bm', bm),
+                                         ('kb', kb)
+                                         ]))
     def add_bond_morse(self, i, j, b0, D, beta):
         self.n_bonds += 1
         self.n_params['n_params'][0]['n_bonds']= self.n_bonds
         
-        self.bond_params['bonds'].append({
-                                         'type': 'morse',
-                                         'i': i,
-                                         'j': j,
-                                         'func': 3,
-                                         'b0': b0,
-                                         'D': D,
-                                         'beta': beta
-                                         })
+        self.bond_params['bonds'].append(OrderedDict([
+                                         ('type', 'morse'),
+                                         ('i', i),
+                                         ('j', j),
+                                         ('func', 3),
+                                         ('b0', b0),
+                                         ('D', D),
+                                         ('beta', beta)
+                                         ]))
 
     def add_angle_harmonic(self, i, j, k, theta_0, kb):
         self.n_angles += 1
         self.n_params['n_params'][0]['n_angles']= self.n_angles;
         
-        self.angle_params['angles'].append({
-            'type': 'harmonic',
-            'i': i,
-            'j': j,
-            'k': k,
-            'func': 1,
-            'theta_0': theta_0,
-            'kb': kb
-         })
+        self.angle_params['angles'].append(OrderedDict([
+            ('type', 'harmonic'),
+            ('i', i),
+            ('j', j),
+            ('k', k),
+            ('func', 1),
+            ('theta_0', theta_0),
+            ('kb', kb)
+         ]))
     
     def add_angle_G96(self, i, j, k, theta_0, kb):
          self.n_angles += 1
          self.n_params['n_params'][0]['n_angles']= self.n_angles;
          
-         self.angle_params['angles'].append({
-                                            'type': 'G96',
-                                            'i': i,
-                                            'j': j,
-                                            'k': k,
-                                            'func': 2,
-                                            'theta_0': theta_0,
-                                            'kb': kb
-                                            })
+         self.angle_params['angles'].append(OrderedDict([
+                                            ('type', 'G96'),
+                                            ('i', i),
+                                            ('j', j),
+                                            ('k', k),
+                                            ('func', 2),
+                                            ('theta_0', theta_0),
+                                            ('kb', kb)
+                                            ]))
     '''Gromacs type 3 (i.e., func =3) Ryckaert-Bellemans (RB) dihedrals
         '''
     #to convert OPLS to RB:
@@ -141,20 +146,20 @@ class Parameters():
         self.n_dihedrals += 1
         self.n_params['n_params'][0]['n_dihedrals']= self.n_dihedrals;
         
-        self.dihedral_params['dihedrals'].append({
-            'type': 'RB',
-            'i': i,
-            'j': j,
-            'k': k,
-            'l': l,
-            'func': 3,
-            'c0': c0,
-            'c1': c1,
-            'c2': c2,
-            'c3': c3,
-            'c4': c4,
-            'c5': c5,
-        })
+        self.dihedral_params['dihedrals'].append(OrderedDict([
+            ('type', 'RB'),
+            ('i', i),
+            ('j', j),
+            ('k', k),
+            ('l', l),
+            ('func', 3),
+            ('c0', c0),
+            ('c1', c1),
+            ('c2', c2),
+            ('c3', c3),
+            ('c4', c4),
+            ('c5', c5)
+        ]))
     '''Gromacs type 5 (i.e., func =5) Fourier, i.e, OPLS style dihedrals
         note, these do not support phase shifting of phi
         '''
@@ -162,50 +167,50 @@ class Parameters():
         self.n_dihedrals += 1
         self.n_params['n_params'][0]['n_dihedrals']= self.n_dihedrals;
         
-        self.dihedral_params['dihedrals'].append({
-             'type': 'fourier',
-             'i': i,
-             'j': j,
-             'k': k,
-             'l': l,
-             'func': 5,
-             'c1': c1,
-             'c2': c2,
-             'c3': c3,
-             'c4': c4,
-             })
+        self.dihedral_params['dihedrals'].append(OrderedDict([
+             ('type', 'fourier'),
+             ('i', i),
+             ('j', j),
+             ('k', k),
+             ('l', l),
+             ('func', 5),
+             ('c1', c1),
+             ('c2', c2),
+             ('c3', c3),
+             ('c4', c4)
+             ]))
     
     def add_dihedral_periodic(self, i, j, k, l, phi_s, k_phi, multiplicity):
         self.n_dihedrals += 1
         self.n_params['n_params'][0]['n_dihedrals']= self.n_dihedrals;
         
-        self.dihedral_params['dihedrals'].append({
-                                                 'type': 'periodic',
-                                                 'i': i,
-                                                 'j': j,
-                                                 'k': k,
-                                                 'l': l,
-                                                 'func': 1,
-                                                 'phi_s': phi_s,
-                                                 'k_phi': k_phi,
-                                                 'multiplicity': multiplicity
-                                                 })
+        self.dihedral_params['dihedrals'].append(OrderedDict([
+                                                 ('type', 'periodic'),
+                                                 ('i', i),
+                                                 ('j', j),
+                                                 ('k', k),
+                                                 ('l', l),
+                                                 ('func', 1),
+                                                 ('phi_s', phi_s),
+                                                 ('k_phi', k_phi),
+                                                 ('multiplicity', multiplicity)
+                                                 ]))
             
     def add_dihedral_periodic_multiple(self, i, j, k, l, phi_s, k_phi, multiplicity):
         self.n_dihedrals += 1
         self.n_params['n_params'][0]['n_dihedrals']= self.n_dihedrals;
      
-        self.dihedral_params['dihedrals'].append({
-                                              'type': 'periodic multiple',
-                                              'i': i,
-                                              'j': j,
-                                              'k': k,
-                                              'l': l,
-                                              'func': 9,
-                                              'phi_s': phi_s,
-                                              'k_phi': k_phi,
-                                              'multiplicity': multiplicity
-                                              })
+        self.dihedral_params['dihedrals'].append(OrderedDict([
+                                              ('type', 'periodic multiple'),
+                                              ('i', i),
+                                              ('j', j),
+                                              ('k', k),
+                                              ('l', l),
+                                              ('func', 9),
+                                              ('phi_s', phi_s),
+                                              ('k_phi', k_phi),
+                                              ('multiplicity', multiplicity)
+                                              ]))
     #note, gromacs doesn't differentiate between proper and improper dihedrals in the data file
     #(i.e., both are in the dihedraltypes section)
     #however packages likes lammps put them in different sections
@@ -214,17 +219,17 @@ class Parameters():
         self.n_dihedrals += 1
         self.n_params['n_params'][0]['n_impropers']= self.n_impropers;
             
-        self.improper_params['impropers'].append({
-             'type': 'periodic',
-             'i': i,
-             'j': j,
-             'k': k,
-             'l': l,
-             'func': 4,
-             'phi_s': phi_s,
-             'k_phi': k_phi,
-             'multiplicity': multiplicity
-             })
+        self.improper_params['impropers'].append(OrderedDict([
+             ('type', 'periodic'),
+             ('i', i),
+             ('j', j),
+             ('k', k),
+             ('l', l),
+             ('func', 4),
+             ('phi_s', phi_s),
+             ('k_phi', k_phi),
+             ('multiplicity', multiplicity)
+             ]))
     def print_itp(self, f):
         print >> f, '[ atomtypes ]'
         print >> f, '; name\tbond_type\tatm. nm\tmass\tcharge\tptype\tsigma\tepsilon'
